@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1ro Medio - Ciencias Naturales</title>
+    <style>
+        :root {
+            --science: #3498DB;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --bio: #27AE60;
+            --fis: #2980B9;
+            --qui: #D35400;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: var(--light); color: var(--dark); }
+        header { background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        h1 { text-align: center; color: var(--science); }
+
+        .grid-ciencias { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
+
+        .ciencia-card {
+            background: white; padding: 35px; border-radius: 12px; text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-decoration: none; color: var(--dark);
+            font-weight: bold; font-size: 20px; transition: transform 0.2s; border-bottom: 6px solid var(--science);
+        }
+
+        .ciencia-card:hover { transform: translateY(-5px); }
+        .bio-card { border-bottom-color: var(--bio); }
+        .fis-card { border-bottom-color: var(--fis); }
+        .qui-card { border-bottom-color: var(--qui); }
+
+        .descripcion { font-size: 14px; color: #7F8C8D; font-weight: normal; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="1medio.html">⬅️ Volver a 1.° Medio</a>
+        <div>1.° Año Medio - Ciencias Naturales</div>
+    </header>
+
+    <div class="container">
+        <h1>Módulos de Ciencias 1.° Medio</h1>
+        <p style="text-align: center; color: gray;">Profundización en las disciplinas científicas de enseñanza media.</p>
+        
+        <div class="grid-ciencias">
+            <a href="bio1.html" class="ciencia-card bio-card">
+                🌿 Biología
+                <div class="descripcion">Evolución, Biodiversidad y evidencias del cambio biológico.</div>
+            </a>
+            <a href="fis1.html" class="ciencia-card fis-card">
+                ⚡ Física
+                <div class="descripcion">Ondas: Sonido, luz y sus aplicaciones tecnológicas.</div>
+            </a>
+            <a href="qui1.html" class="ciencia-card qui-card">
+                🧪 Química
+                <div class="descripcion">Reacciones químicas y estequiometría de la materia.</div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

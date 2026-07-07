@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7mo Básico - Historia</title>
+    <style>
+        :root {
+            --his: #9B59B6;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #2ECC71;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 { color: var(--his); border-bottom: 3px solid var(--his); padding-bottom: 10px; }
+        h2 { color: var(--dark); margin-top: 40px; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .quiz-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        .pregunta { margin-bottom: 20px; font-weight: bold; }
+        .opciones label { display: block; margin: 8px 0; cursor: pointer; }
+
+        .btn-evaluar {
+            background-color: var(--his);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="7septimo.html">⬅️ Volver a Asignaturas</a>
+        <div>7.° Año Básico - Historia</div>
+    </header>
+
+    <div class="container">
+        <h1>Unidad 1: Los Albores de la Humanidad</h1>
+        
+        <h2>📖 1. Resumen: Del Paleolítico al Neolítico</h2>
+        <p>La Prehistoria se divide principalmente en dos grandes etapas marcadas por la forma en que los seres humanos obtenían su alimento:</p>
+        <ul>
+            <li><strong>Paleolítico (Edad de Piedra tallada):</strong> Los humanos eran <strong>nómadas</strong> (viajaban de un lugar a otro), vivían en bandas y se dedicaban a la caza y la recolección.</li>
+            <li><strong>Neolítico (Edad de Piedra pulida):</strong> Ocurre la <strong>revolución agrícola</strong>. El ser humano descubre la agricultura y la ganadería, volviéndose <strong>sedentario</strong> (se queda a vivir en un solo lugar), lo que permite crear los primeros poblados.</li>
+        </ul>
+
+        <h2>🎥 2. Video Educativo</h2>
+        <p>Aprende más sobre cómo el descubrimiento de la agricultura cambió la historia de la humanidad:</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/LBi2KLq8fG0" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <h2>✍️ 3. Evaluación de Conocimientos</h2>
+        <div class="quiz-box">
+            <div class="pregunta">1. ¿Qué significa que un grupo humano sea "Nómada"?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p1" value="incorrecto"> a) Que vive siempre en el mismo lugar.</label>
+                <label><input type="radio" name="p1" value="correcto"> b) Que se traslada de un lugar a otro en busca de alimento.</label>
+                <label><input type="radio" name="p1" value="incorrecto"> c) Que domina la agricultura y la escritura.</label>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="pregunta">2. ¿Cuál fue el gran descubrimiento que permitió el paso al Neolítico?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p2" value="incorrecto"> a) El descubrimiento del fuego.</label>
+                <label><input type="radio" name="p2" value="correcto"> b) La invención de la agricultura y la ganadería.</label>
+                <label><input type="radio" name="p2" value="incorrecto"> c) La creación de las primeras redes sociales.</label>
+            </div>
+
+            <br>
+            <button class="btn-evaluar" onclick="verificarQuiz()">Enviar Respuestas</button>
+            <div id="resultadoQuiz" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        function verificarQuiz() {
+            let nota = 0;
+            let p1 = document.querySelector('input[name="p1"]:checked');
+            let p2 = document.querySelector('input[name="p2"]:checked');
+
+            if (!p1 || !p2) {
+                alert("¡Por favor, responde todas las preguntas!");
+                return;
+            }
+
+            if (p1.value === "correcto") nota++;
+            if (p2.value === "correcto") nota++;
+
+            let mensaje = document.getElementById("resultadoQuiz");
+            mensaje.style.display = "block";
+            mensaje.innerHTML = `📜 ¡Resultado! Tuviste ${nota} de 2 respuestas correctas. ¡Sigue aprendiendo!`;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor IA</title>
+    <style>
+        :root { --primary: #9B59B6; --dark: #2C3E50; --light: #F8F9FA; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); }
+        header { background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .chat-container { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; border: 2px solid var(--primary); }
+        .chat-header { background: var(--primary); color: white; padding: 15px; font-weight: bold; text-align: center; font-size: 18px; }
+        .chat-box { height: 350px; padding: 20px; overflow-y: auto; background: #F4F6F7; display: flex; flex-direction: column; gap: 12px; }
+        .message { padding: 10px 15px; border-radius: 15px; max-width: 75%; font-size: 15px; }
+        .user-message { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .ia-message { background: white; align-self: flex-start; border-bottom-left-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .chat-input-area { display: flex; padding: 15px; background: white; border-top: 1px solid #E5E7E9; }
+        .chat-input-area input { flex: 1; padding: 12px; border: 1px solid #BDC3C7; border-radius: 8px; }
+        .chat-input-area button { background: var(--primary); color: white; border: none; padding: 0 20px; margin-left: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .sug-btn { background: #F5EEF8; border: 1px solid var(--primary); color: var(--primary); padding: 6px 12px; border-radius: 15px; font-size: 13px; cursor: pointer; margin: 3px; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <header><a href="herramientas.html">⬅️ Volver a Herramientas</a><div>🤖 Tutor IA</div></header>
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">⚡ EduBot de Estudio</div>
+            <div class="chat-box" id="chatBox">
+                <div class="message ia-message">👋 ¡Hola! Soy tu tutor IA. Pregúntame sobre la regla de los signos, la célula, el neolítico o el conflicto narrativo.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="userInput" placeholder="Escribe tu duda escolar aquí..." onkeypress="evaluarEnter(event)">
+                <button onclick="enviarPregunta()">Preguntar</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="sug-btn" onclick="procesarSugerencia('regla de los signos')">📐 Signos</button>
+            <button class="sug-btn" onclick="procesarSugerencia('que es la celula')">🌿 Célula</button>
+            <button class="sug-btn" onclick="procesarSugerencia('neolitico')">📜 Neolítico</button>
+        </div>
+    </div>
+    <script>
+        function evaluarEnter(e) { if (e.key === "Enter") enviarPregunta(); }
+        function procesarSugerencia(txt) { document.getElementById("userInput").value = txt; enviarPregunta(); }
+        function enviarPregunta() {
+            let input = document.getElementById("userInput"); let txt = input.value.trim(); if (txt === "") return;
+            let box = document.getElementById("chatBox"); box.innerHTML += `<div class="message user-message">${txt}</div>`;
+            input.value = ""; box.scrollTop = box.scrollHeight;
+            setTimeout(() => {
+                let resp = "🤖 ¡Buena pregunta! Intenta usar conceptos clave de tus asignaturas o presiona las sugerencias.";
+                let t = txt.toLowerCase();
+                if (t.includes("signo") || t.includes("matematica")) resp = "📐 Multiplicación/División: Signos iguales dan positivo (+), diferentes dan negativo (-).";
+                if (t.includes("celula") || t.includes("biologia")) resp = "🌿 Procarionte: Sin núcleo (bacterias). Eucarionte: Con núcleo definido (animales/vegetales).";
+                if (t.includes("neolitico") || t.includes("historia")) resp = "📜 En el Neolítico el ser humano descubrió la agricultura y la ganadería, volviéndose sedentario.";
+                if (t.includes("conflicto")) resp = "📚 El conflicto narrativo es el problema central que rompe el equilibrio y mueve la historia.";
+                box.innerHTML += `<div class="message ia-message">${resp}</div>`; box.scrollTop = box.scrollHeight;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

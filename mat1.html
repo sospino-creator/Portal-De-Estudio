@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1ro Medio - Matemática</title>
+    <style>
+        :root {
+            --math: #E74C3C;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #2ECC71;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: var(--math); border-bottom: 3px solid var(--math); padding-bottom: 10px; }
+        h2 { color: var(--dark); margin-top: 40px; }
+        .formula-box { background: #EDF2F7; padding: 15px; border-left: 5px solid var(--math); border-radius: 4px; font-family: 'Courier New', Courier, monospace; font-size: 18px; margin: 15px 0; color: #2D3748; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 20px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; }
+        .quiz-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-top: 20px; }
+        .pregunta { margin-bottom: 20px; font-weight: bold; }
+        .opciones label { display: block; margin: 8px 0; cursor: pointer; }
+        .btn-evaluar { background-color: var(--math); color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .resultado { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--success); display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="1medio.html">⬅️ Volver a Asignaturas</a>
+        <div>1.° Año Medio - Matemática</div>
+    </header>
+
+    <div class="container">
+        <h1>Unidad 1: Números Racionales (Q)</h1>
+        
+        <h2>📖 1. Resumen: El Conjunto Q</h2>
+        <p>El conjunto de los <strong>Números Racionales ($\mathbb{Q}$)</strong> está formado por todos aquellos números que pueden ser expresados como una fracción de dos números enteros, donde el denominador es distinto de cero. Esto incluye a:</p>
+        <ul>
+            <li>Enteros positivos y negativos (ej: 5, -3)</li>
+            <li>Fracciones propias, impropias y mixtas (ej: 2/3, -7/4)</li>
+            <li>Decimales finitos (ej: 0,25 = 1/4)</li>
+            <li>Decimales infinitos periódicos y semiperiódicos (ej: 0,333... = 1/3)</li>
+        </ul>
+
+        <p>Recuerda la regla clave para la multiplicación de fracciones:</p>
+        <div class="formula-box">
+            (a / b) * (c / d) = (a * c) / (b * d)
+        </div>
+
+        <h2>🎥 2. Video Educativo</h2>
+        <p>Repasa cómo resolver operaciones combinadas con fracciones y decimales respetando la prioridad de operaciones (PAPOMUDAS):</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/SgTsk9P_uLw" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <h2>✍️ 3. Desafío Matemático</h2>
+        <div class="quiz-box">
+            <div class="pregunta">1. ¿Cuál es el resultado simplificado de (1/2) + (1/4)?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p1" value="incorrecto"> a) 2/6</label>
+                <label><input type="radio" name="p1" value="correcto"> b) 3/4</label>
+                <label><input type="radio" name="p1" value="incorrecto"> c) 1/8</label>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="pregunta">2. Si multiplicamos (-2/3) por (3/5), ¿cuál es el resultado correcto?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p2" value="correcto"> a) -2/5</label>
+                <label><input type="radio" name="p2" value="incorrecto"> b) -6/8</label>
+                <label><input type="radio" name="p2" value="incorrecto"> c) 2/5</label>
+            </div>
+
+            <br>
+            <button class="btn-evaluar" onclick="verificarQuiz()">Verificar Respuestas</button>
+            <div id="resultadoQuiz" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        function verificarQuiz() {
+            let nota = 0;
+            let p1 = document.querySelector('input[name="p1"]:checked');
+            let p2 = document.querySelector('input[name="p2"]:checked');
+
+            if (!p1 || !p2) { alert("Por favor, responde ambas preguntas antes de evaluar."); return; }
+            if (p1.value === "correcto") nota++;
+            if (p2.value === "correcto") nota++;
+
+            let mensaje = document.getElementById("resultadoQuiz");
+            mensaje.style.display = "block";
+            mensaje.innerHTML = `📐 ¡Buen trabajo! Obtuviste ${nota} de 2 respuestas correctas.`;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8vo Básico - Lenguaje</title>
+    <style>
+        :root {
+            --lang: #F39C12;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #2ECC71;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 { color: var(--lang); border-bottom: 3px solid var(--lang); padding-bottom: 10px; }
+        h2 { color: var(--dark); margin-top: 40px; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .quiz-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        .pregunta { margin-bottom: 20px; font-weight: bold; }
+        .opciones label { display: block; margin: 8px 0; cursor: pointer; }
+
+        .btn-evaluar {
+            background-color: var(--lang);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="8octavo.html">⬅️ Volver a Asignaturas</a>
+        <div>8.° Año Básico - Lenguaje</div>
+    </header>
+
+    <div class="container">
+        <h1>Unidad 1: La Epopeya y las Grandes Hazañas</h1>
+        
+        <h2>📖 1. Resumen: ¿Qué es una Epopeya?</h2>
+        <p>La <strong>epopeya</strong> es un poema narrativo extenso, escrito generalmente en verso, que cuenta las hazañas heroicas de un personaje que representa los valores de todo un pueblo o cultura. Surgieron en la antigüedad para ser cantadas de forma oral.</p>
+        <blockquote>
+            <strong>Características del Héroe Epopéyico:</strong><br>
+            • Posee una fuerza, inteligencia o valentía sobrehumana.<br>
+            • Se enfrenta a grandes peligros, monstruos o destinos trágicos.<br>
+            • Sus acciones determinan el destino de su patria o nación.<br>
+            • <i>Ejemplos históricos:</i> Aquiles en la Ilíada, Odiseo en la Odisea o el Mío Cid.
+        </blockquote>
+
+        <h2>🎥 2. Video Educativo</h2>
+        <p>Aprende más sobre los orígenes de la epopeya y sus diferencias con los cuentos tradicionales:</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/g8m38m57u8k" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <h2>✍️ 3. Cuestionario de Comprensión</h2>
+        <p>Responde las siguientes preguntas sobre la materia de hoy:</p>
+
+        <div class="quiz-box">
+            <div class="pregunta">1. ¿Cuál es el formato original en el que se transmitían las epopeyas?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p1" value="incorrecto"> a) Libros impresos en imprentas modernas.</label>
+                <label><input type="radio" name="p1" value="correcto"> b) Poemas narrativos cantados u orados de manera oral.</label>
+                <label><input type="radio" name="p1" value="incorrecto"> c) Películas de cine dramático.</label>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="pregunta">2. ¿A quién representa el héroe de una epopeya con sus actos?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p2" value="correcto"> a) A los valores e ideales de todo su pueblo o cultura.</label>
+                <label><input type="radio" name="p2" value="incorrecto"> b) Únicamente a sus propios intereses personales.</label>
+                <label><input type="radio" name="p2" value="incorrecto"> c) Al villano o antagonista de la obra.</label>
+            </div>
+
+            <br>
+            <button class="btn-evaluar" onclick="verificarQuiz()">Enviar Respuestas</button>
+            <div id="resultadoQuiz" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        function verificarQuiz() {
+            let nota = 0;
+            let p1 = document.querySelector('input[name="p1"]:checked');
+            let p2 = document.querySelector('input[name="p2"]:checked');
+
+            if (!p1 || !p2) {
+                alert("¡Falta responder! Por favor, contesta ambas preguntas.");
+                return;
+            }
+
+            if (p1.value === "correcto") nota++;
+            if (p2.value === "correcto") nota++;
+
+            let mensaje = document.getElementById("resultadoQuiz");
+            mensaje.style.display = "block";
+            mensaje.innerHTML = `📚 ¡Excelente lectura! Obtuviste ${nota} de 2 respuestas correctas.`;
+        }
+    </script>
+
+</body>
+</html>

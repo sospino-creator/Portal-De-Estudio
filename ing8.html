@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8vo Básico - Inglés</title>
+    <style>
+        :root {
+            --english: #1ABC9C;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #2ECC71;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: var(--english); border-bottom: 3px solid var(--english); padding-bottom: 10px; }
+        h2 { color: var(--dark); margin-top: 40px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 20px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; }
+        .quiz-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-top: 20px; }
+        .pregunta { margin-bottom: 20px; font-weight: bold; }
+        .opciones label { display: block; margin: 8px 0; cursor: pointer; }
+        .btn-evaluar { background-color: var(--english); color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .resultado { margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--success); display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="8octavo.html">⬅️ Volver a Asignaturas</a>
+        <div>8.° Año Básico - Inglés</div>
+    </header>
+
+    <div class="container">
+        <h1>Unit 1: Countries, Cultures and Customs</h1>
+        
+        <h2>📖 1. Grammar Summary: Simple Past</h2>
+        <p>Usamos el <strong>Simple Past</strong> (Pasado Simple) para hablar de acciones completadas que ocurrieron en el pasado. Se dividen en dos tipos de verbos:</p>
+        <ul>
+            <li><strong>Verbos Regulares:</strong> Solo les agregamos <strong>-ed</strong> al final.<br>
+                • <em>Play</em> ➔ Played (Jugar ➔ Jugó)<br>
+                • <em>Watch</em> ➔ Watched (Ver ➔ Vio)
+            </li>
+            <li><strong>Verbos Irregulares:</strong> Cambian su forma por completo y hay que memorizarlos.<br>
+                • <em>Go</em> ➔ Went (Ir ➔ Fue)<br>
+                • <em>See</em> ➔ Saw (Ver ➔ Vio)<br>
+                • <em>Have</em> ➔ Had (Tener ➔ Tuvo)
+            </li>
+        </ul>
+        <p>Para hacer negaciones usamos el auxiliar <strong>did not (didn't)</strong> y el verbo vuelve a su forma original: <em>"I didn't go to the school yesterday"</em>.</p>
+
+        <h2>🎥 2. Video Lessons</h2>
+        <p>Acompaña esta breve explicación con la pronunciación correcta del pasado en inglés:</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/0X6vshcoIuE" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <h2>✍️ 3. Quick Quiz</h2>
+        <div class="quiz-box">
+            <div class="pregunta">1. What is the correct past tense of the irregular verb "GO"?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p1" value="incorrecto"> a) Goed</label>
+                <label><input type="radio" name="p1" value="correcto"> b) Went</label>
+                <label><input type="radio" name="p1" value="incorrecto"> c) Goes</label>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="pregunta">2. Complete the sentence: "Yesterday, she ________ a very good movie."</div>
+            <div class="opciones">
+                <label><input type="radio" name="p2" value="correcto"> a) watched</label>
+                <label><input type="radio" name="p2" value="incorrecto"> b) watch</label>
+                <label><input type="radio" name="p2" value="incorrecto"> c) watching</label>
+            </div>
+
+            <br>
+            <button class="btn-evaluar" onclick="verificarQuiz()">Check Answers</button>
+            <div id="resultadoQuiz" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        function verificarQuiz() {
+            let nota = 0;
+            let p1 = document.querySelector('input[name="p1"]:checked');
+            let p2 = document.querySelector('input[name="p2"]:checked');
+
+            if (!p1 || !p2) { alert("Please answer all the questions."); return; }
+            if (p1.value === "correcto") nota++;
+            if (p2.value === "correcto") nota++;
+
+            let mensaje = document.getElementById("resultadoQuiz");
+            mensaje.style.display = "block";
+            mensaje.innerHTML = `🇬🇧 Great job! You scored ${nota} out of 2 correct answers.`;
+        }
+    </script>
+
+</body>
+</html>

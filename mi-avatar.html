@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascota de Estudios Rápida</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background-color: #f3f0df;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0;
+        }
+        .container {
+            display: grid; grid-template-columns: 350px 1fr;
+            background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; width: 850px;
+        }
+        .preview {
+            background: #003366; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px;
+        }
+        
+        /* EL TRUCO DE LA ROPA CURVA */
+        .canvas { position: relative; width: 200px; height: 250px; display: flex; justify-content: center; align-items: center; }
+        .animal { font-size: 120px; z-index: 1; position: relative; bottom: 10px; }
+        
+        /* Polera con hombros caídos y curvas */
+        .shirt { 
+            position: absolute; width: 85px; height: 55px; top: 125px; z-index: 2; 
+            border-radius: 15px 15px 5px 5px; box-shadow: inset 0 -5px 0 rgba(0,0,0,0.1);
+        }
+        /* Pantalones cortos */
+        .pants { 
+            position: absolute; width: 75px; height: 35px; top: 175px; z-index: 1; 
+            border-radius: 4px 4px 10px 10px; 
+        }
+        /* Gorros inclinados para que calcen */
+        .hat { position: absolute; font-size: 55px; top: 15px; z-index: 3; transform: rotate(-5px); }
+        .jewelry { position: absolute; font-size: 40px; top: 105px; z-index: 3; }
+
+        .editor { padding: 30px; }
+        .group { margin-bottom: 15px; }
+        .btn { padding: 8px 12px; margin: 2px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; background: #f5f5f5; }
+        .btn.active { background: #11caa0; color: white; border-color: #11caa0; }
+        .color { width: 30px; height: 30px; border-radius: 50%; display: inline-block; cursor: pointer; margin: 2px; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.3); }
+        .save-btn { background: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; display: inline-block; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="preview">
+            <div class="canvas">
+                <div id="h" class="hat"></div>
+                <div id="j" class="jewelry"></div>
+                <div id="a" class="animal">🦊</div>
+                <div id="s" class="shirt" style="background:#3498DB;"></div>
+                <div id="p" class="pants" style="background:#2C3E50;"></div>
+            </div>
+            <p id="name" style="margin-top:20px; font-weight:bold;">Zorrito de Estudios</p>
+        </div>
+
+        <div class="editor">
+            <h2>Personalizar</h2>
+            <a href="index.html" class="save-btn">💾 Guardar e ir a Dormir 🛌</a>
+            
+            <div class="group">
+                <p><strong>Animal:</strong></p>
+                <button class="btn active" onclick="setA('🦊','Zorrito',this)">🦊 Fox</button>
+                <button class="btn" onclick="setA('🦉','Búho',this)">🦉 Owl</button>
+                <button class="btn" onclick="setA('🐼','Panda',this)">🐼 Panda</button>
+            </div>
+            <div class="group">
+                <p><strong>Polera:</strong></p>
+                <div class="color" style="background:#3498DB;" onclick="setC('s','#3498DB')"></div>
+                <div class="color" style="background:#E74C3C;" onclick="setC('s','#E74C3C')"></div>
+                <div class="color" style="background:#2ECC71;" onclick="setC('s','#2ECC71')"></div>
+                <button class="btn" onclick="setC('s','transparent')">❌ Quitar</button>
+            </div>
+            <div class="group">
+                <p><strong>Pantalón:</strong></p>
+                <div class="color" style="background:#2C3E50;" onclick="setC('p','#2C3E50')"></div>
+                <div class="color" style="background:#F1C40F;" onclick="setC('p','#F1C40F')"></div>
+                <button class="btn" onclick="setC('p','transparent')">❌ Quitar</button>
+            </div>
+            <div class="group">
+                <p><strong>Gorro:</strong></p>
+                <button class="btn" onclick="setE('h','🧢')">🧢 Cap</button>
+                <button class="btn" onclick="setE('h','👑')">👑 Crown</button>
+                <button class="btn" onclick="setE('h','')">❌ Sin Gorro</button>
+            </div>
+            <div class="group">
+                <p><strong>Accesorios:</strong></p>
+                <button class="btn" onclick="setE('j','👓')">👓 Lentes</button>
+                <button class="btn" onclick="setE('j','')">❌ Quitar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setA(e,n,b){ document.getElementById('a').innerText=e; document.getElementById('name').innerText=n+' de Estudios'; act(b); }
+        function setC(l,c){ document.getElementById(l).style.backgroundColor=c; }
+        function setE(l,e){ document.getElementById(l).innerText=e; }
+        function act(b){ b.parentNode.querySelectorAll('.btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8vo Básico - Matemática</title>
+    <style>
+        :root {
+            --math: #E74C3C;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #2ECC71;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 { color: var(--math); border-bottom: 3px solid var(--math); padding-bottom: 10px; }
+        h2 { color: var(--dark); margin-top: 40px; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .quiz-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        .pregunta { margin-bottom: 20px; font-weight: bold; }
+        .opciones label { display: block; margin: 8px 0; cursor: pointer; }
+
+        .btn-evaluar {
+            background-color: var(--math);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="8octavo.html">⬅️ Volver a Asignaturas</a>
+        <div>8.° Año Básico - Matemática</div>
+    </header>
+
+    <div class="container">
+        <h1>Unidad 1: Potencias de Base Entera</h1>
+        
+        <h2>📖 1. Resumen de la Materia</h2>
+        <p>Una <strong>potencia</strong> es una forma multiplicativa abreviada. Consiste en multiplicar un número (la <strong>base</strong>) por sí mismo tantas veces como lo indique otro número (el <strong>exponente</strong>).</p>
+        <blockquote>
+            <strong>Reglas clave de las potencias:</strong><br>
+            • Si la base es negativa y el exponente es <strong>PAR</strong>, el resultado es <strong>POSITIVO</strong>. Ejemplo: (-3)² = 9.<br>
+            • Si la base es negativa y el exponente es <strong>IMPAR</strong>, el resultado es <strong>NEGATIVO</strong>. Ejemplo: (-2)³ = -8.<br>
+            • Toda potencia con exponente 0 (y base distinta de cero) es igual a 1. Ejemplo: 5⁰ = 1.
+        </blockquote>
+
+        <h2>🎥 2. Video Educativo</h2>
+        <p>Revisa esta explicación interactiva para dominar los signos en las potencias de base entera:</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/vwzZEB0SzCI" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <h2>✍️ 3. Evaluación Interactiva (Quiz)</h2>
+        <p>Pon a prueba tus conocimientos resolviendo este mini quiz matemático:</p>
+
+        <div class="quiz-box">
+            <div class="pregunta">1. ¿Cuál es el resultado de (-4)²?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p1" value="incorrecto"> a) -16</label>
+                <label><input type="radio" name="p1" value="correcto"> b) 16</label>
+                <label><input type="radio" name="p1" value="incorrecto"> c) -8</label>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="pregunta">2. ¿Cuánto es (-2)³?</div>
+            <div class="opciones">
+                <label><input type="radio" name="p2" value="incorrecto"> a) 8</label>
+                <label><input type="radio" name="p2" value="incorrecto"> b) 6</label>
+                <label><input type="radio" name="p2" value="correcto"> c) -8</label>
+            </div>
+
+            <br>
+            <button class="btn-evaluar" onclick="verificarQuiz()">Enviar Respuestas</button>
+            <div id="resultadoQuiz" class="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        function verificarQuiz() {
+            let nota = 0;
+            let p1 = document.querySelector('input[name="p1"]:checked');
+            let p2 = document.querySelector('input[name="p2"]:checked');
+
+            if (!p1 || !p2) {
+                alert("Por favor, responde todas las preguntas del quiz.");
+                return;
+            }
+
+            if (p1.value === "correcto") nota++;
+            if (p2.value === "correcto") nota++;
+
+            let mensaje = document.getElementById("resultadoQuiz");
+            mensaje.style.display = "block";
+            mensaje.innerHTML = `📐 ¡Desafío completado! Lograste ${nota} de 2 respuestas correctas.`;
+        }
+    </script>
+
+</body>
+</html>

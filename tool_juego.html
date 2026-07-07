@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldeas del Conocimiento Personalizadas</title>
+    <style>
+        :root {
+            --primary: #3498DB;
+            --dark: #1E272C;
+            --card-bg: #2C3E50;
+            --gold: #F1C40F;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; }
+        header { background-color: #2980B9; padding: 15px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: white; font-weight: bold; }
+        
+        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 25px auto; padding: 0 20px; }
+        @media (max-width: 900px) { .main-layout { grid-template-columns: 1fr; } }
+
+        .panel-control { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between; min-height: 520px; }
+        .aldea-box { background: #27AE60; border: 6px solid #1E8449; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        .stats-bar { display: flex; justify-content: space-around; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .grid-aldea { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; background: #2ECC71; padding: 15px; border-radius: 8px; min-height: 320px; align-content: start; }
+        
+        .slot { background: rgba(0, 0, 0, 0.1); border: 2px dashed rgba(25px, 25px, 25px, 0.2); border-radius: 8px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+        .tienda-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        
+        .btn-shop { background: #34495E; color: white; border: 2px solid var(--gold); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .btn-shop:hover { background: #4E6A85; }
+
+        .screen { display: none; }
+        .active { display: block; }
+
+        .btn { background: #3498DB; color: white; border: none; padding: 12px 30px; font-size: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; margin-top: 15px; }
+        .btn:hover { background: #2980B9; }
+
+        select, input[type="text"] { width: 100%; padding: 12px; margin-top: 10px; border-radius: 6px; border: none; font-size: 16px; box-sizing: border-box; }
+        
+        .pregunta-texto { font-size: 18px; font-weight: bold; margin: 20px 0; background: #1A252F; padding: 15px; border-radius: 8px; }
+        .options-stack { display: flex; flex-direction: column; gap: 10px; }
+        .opt-btn { background: #34495E; color: white; border: 2px solid #5BC0BE; padding: 12px; border-radius: 8px; font-size: 15px; cursor: pointer; text-align: left; font-weight: bold; }
+        
+        .correct { background: #2ECC71 !important; }
+        .wrong { background: #E74C3C !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="herramientas.html">⬅️ Salir de las Aldeas</a>
+        <div>🏡 Buscador de Materias y Aldeas Múltiples</div>
+    </header>
+
+    <div class="main-layout">
+        
+        <div class="panel-control">
+            
+            <div id="setupScreen" class="screen active">
+                <h2>📚 ¿Qué quieres estudiar hoy?</h2>
+                
+                <label>1. Elige la Asignatura (Cada una tiene su propia aldea):</label>
+                <select id="materiaSelect" onchange="cambiarAldeaDeMateria()">
+                    <option value="matematica">📐 Matemática</option>
+                    <option value="ciencias">🔬 Ciencias Naturales (Física/Química/Bio)</option>
+                    <option value="lenguaje">📚 Lenguaje y Comunicación</option>
+                    <option value="historia">📜 Historia y Geografía</option>
+                </select>
+
+                <br><br>
+                <label>2. Escribe qué tema específico quieres buscar (Ej: <em>vibraciones, fracciones, celula, epopeya, atomo</em>):</label>
+                <input type="text" id="temaInput" placeholder="Escribe el tema aquí...">
+
+                <button class="btn" style="width:100%;" onclick="generarTriviaPersonalizada()">Buscar y Empezar Ronda</button>
+            </div>
+
+            <div id="quizScreen" class="screen">
+                <div style="display: flex; justify-content: space-between; color: var(--gold); font-weight: bold; margin-bottom: 10px;">
+                    <span id="questionNum">Pregunta 1</span>
+                    <span id="roundCash">Monedas ganadas: 0</span>
+                </div>
+                <div class="pregunta-texto" id="questionText">Cargando...</div>
+                <div class="options-stack" id="optionsContainer"></div>
+            </div>
+
+            <div id="resultScreen" class="screen" style="text-align: center;">
+                <h2 id="resultTitle">Ronda Finalizada</h2>
+                <p style="font-size: 18px;" id="resultDetails">Respuestas correctas: 0</p>
+                <p style="font-size: 24px; font-weight: bold; color: var(--gold);" id="payoutText">+$0 Monedas</p>
+                <button class="btn" onclick="irAlMenuInicial()">Volver a Configurar</button>
+            </div>
+
+        </div>
+
+        <div class="aldea-box">
+            <div class="stats-bar">
+                <span>Materia Actual: <span id="materiaLabel" style="color:var(--gold); text-transform: uppercase;">MATEMÁTICA</span></span>
+            </div>
+            <div class="stats-bar" style="margin-top:-5px;">
+                <span>💰 Monedas: <span id="walletDisplay" style="color:var(--gold);">0</span></span>
+                <span>🏠 Cupos: <span id="buildCount">0/15</span></span>
+            </div>
+
+            <div class="grid-aldea" id="villageMap"></div>
+
+            <div class="tienda-grid">
+                <button class="btn-shop" onclick="comprarEdificio('🏡', 10)">🏡 Casa ($10)</button>
+                <button class="btn-shop" onclick="comprarEdificio('🌾', 20)">🌾 Granja ($20)</button>
+                <button class="btn-shop" onclick="comprarEdificio('🏰', 50)">🏰 Castillo ($50)</button>
+            </div>
+            <button class="btn" style="background:#C0392B; margin-top:10px; padding:6px; font-size:12px;" onclick="demolerAldea()">Demoler esta aldea</button>
+        </div>
+
+    </div>
+
+    <script>
+        // BANCO DE PREGUNTAS CLASIFICADO POR MATERIAS Y PALABRAS CLAVE (Ninguna se repite)
+        const granBancoDatos = [
+            // MATEMÁTICA
+            { m: "matematica", t: "fracciones", q: "¿Qué representa el denominador en una fracción?", a: ["Las partes que se toman", "El total de partes iguales en que se divide el entero", "El resultado de una multiplicación", "Una potencia"], c: 1 },
+            { m: "matematica", t: "fracciones", q: "Si sumas 1/4 + 2/4, el resultado correcto es:", a: ["3/8", "3/4", "1/2", "4/4"], c: 1 },
+            { m: "matematica", t: "signos", q: "En la regla de signos, ¿cuánto es (-5) * (-4)?", a: ["-20", "20", "-9", "9"], c: 1 },
+            { m: "matematica", t: "potencias", q: "¿Cuál es el resultado de la potencia (-3)³?", a: ["9", "-9", "27", "-27"], c: 3 },
+            { m: "matematica", t: "potencias", q: "Todo número entero (excepto el 0) elevado a 0 es igual a:", a: ["0", "1", "El mismo número", "-1"], c: 1 },
+
+            // CIENCIAS
+            { m: "ciencias", t: "vibraciones", q: "FÍSICA: Las ondas sonoras se transmiten gracias a:", a: ["El vacío absoluto", "La vibración de partículas en un medio", "Rayos láser", "Cargas eléctricas estáticas"], c: 1 },
+            { m: "ciencias", t: "vibraciones", q: "FÍSICA: El número de vibraciones u oscilaciones por segundo se conoce como:", a: ["Amplitud", "Período", "Frecuencia", "Eco"], c: 2 },
+            { m: "ciencias", t: "celula", q: "BIOLOGÍA: ¿Qué tipo de célula carece de un núcleo celular organizado?", a: ["Eucarionte animal", "Procarionte", "Eucarionte vegetal", "Neurona"], c: 1 },
+            { m: "ciencias", t: "atomo", q: "QUÍMICA: ¿Qué científico descubrió el electrón con su modelo de 'budín de pasas'?", a: ["Dalton", "Rutherford", "Bohr", "Thomson"], c: 3 },
+            { m: "ciencias", t: "atomo", q: "QUÍMICA: La mayor parte del volumen de un átomo, según Rutherford, corresponde a:", a: ["Un núcleo líquido", "Espacio vacío por donde giran electrones", "Protones compactos", "Neutrones flotantes"], c: 1 },
+
+            // LENGUAJE
+            { m: "lenguaje", t: "epopeya", q: "¿Cuál es el propósito principal de una epopeya?", a: ["Hacer reír a los lectores", "Contar grandes hazañas heroicas que representan a un pueblo", "Explicar una receta médica antigua", "Dar instrucciones de construcción"], c: 1 },
+            { m: "lenguaje", t: "epopeya", q: "¿Cómo se transmitían originalmente las epopeyas en la antigüedad?", a: ["Por redes sociales", "En libros de texto impresos", "De forma oral por cantores o aedos", "En manuscritos secretos"], c: 2 },
+            { m: "lenguaje", t: "heroe", q: "Una característica fundamental del héroe de la epopeya es que:", a: ["Es un villano incomprendido", "Encarna los valores y el honor de toda su cultura", "Solo busca dinero para sí mismo", "Tiene miedo a viajar"], c: 1 },
+
+            // HISTORIA
+            { m: "historia", t: "humanismo", q: "¿Qué corriente de pensamiento puso al ser humano como centro del universo (Antropocentrismo)?", a: ["El Teocentrismo", "El Feudalismo", "El Humanismo", "La Ilustración"], c: 2 },
+            { m: "historia", t: "renacimiento", q: "¿Qué invento de 1450 permitió la masificación de las ideas del Renacimiento?", a: ["La Imprenta de tipos móviles", "La Brújula", "El Astrolabio", "El Telescopio"], c: 0 },
+            { m: "historia", t: "edad media", q: "Durante la Edad Media, el pensamiento predominante era el Teocentrismo, lo que significa que:", a: ["El Rey maneja la economía", "Dios es el centro de toda explicación y de la vida", "La tecnología es lo más importante", "El hombre domina la naturaleza"], c: 1 }
+        ];
+
+        let materiaActual = "matematica";
+        let preguntasFiltradas = [];
+        let qIndex = 0;
+        let buenasRonda = 0;
+        let dineroRonda = 0;
+
+        // Cargar datos iniciales al abrir la página
+        cambiarAldeaDeMateria();
+
+        function cambiarAldeaDeMateria() {
+            materiaActual = document.getElementById("materiaSelect").value;
+            document.getElementById("materiaLabel").innerText = materiaActual;
+            
+            // Renderizar la billetera y aldea correspondientes usando localStorage dinámico
+            renderizarAldeaMateria();
+        }
+
+        function renderizarAldeaMateria() {
+            let monedasMateria = parseInt(localStorage.getItem("coins_" + materiaActual) || "0");
+            let estructuraMateria = JSON.parse(localStorage.getItem("village_" + materiaActual) || "[]");
+
+            document.getElementById("walletDisplay").innerText = monedasMateria;
+            
+            let mapContainer = document.getElementById("villageMap");
+            mapContainer.innerHTML = "";
+            let conteo = 0;
+
+            for (let i = 0; i < 15; i++) {
+                let item = estructuraMateria[i] || "";
+                if(item !== "") conteo++;
+                mapContainer.innerHTML += `<div class="slot">${item}</div>`;
+            }
+            document.getElementById("buildCount").innerText = `${conteo}/15`;
+        }
+
+        function generarTriviaPersonalizada() {
+            let temaBuscado = document.getElementById("temaInput").value.trim().toLowerCase();
+            
+            // Filtrar las preguntas que correspondan a la materia Y contengan la palabra clave
+            preguntasFiltradas = granBancoDatos.filter(p => {
+                return p.m === materiaActual && p.t.includes(temaBuscado);
+            });
+
+            // Si no encuentra por palabra clave exacta, le da todas las de esa materia como respaldo
+            if (preguntasFiltradas.length === 0) {
+                alert(`ℹ️ No encontramos preguntas específicas para tu búsqueda. Te daremos una trivia general de esta materia.`);
+                preguntasFiltradas = granBancoDatos.filter(p => p.m === materiaActual);
+            }
+
+            // Desordenar las preguntas encontradas y cortar un máximo de 10
+            preguntasFiltradas.sort(() => Math.random() - 0.5);
+            if (preguntasFiltradas.length > 10) {
+                preguntasFiltradas = preguntasFiltradas.slice(0, 10);
+            }
+
+            // Iniciar variables de juego
+            qIndex = 0;
+            buenasRonda = 0;
+            dineroRonda = 0;
+
+            document.getElementById("setupScreen").classList.remove("active");
+            document.getElementById("quizScreen").classList.add("active");
+            
+            mostrarPreguntaJuego();
+        }
+
+        function mostrarPreguntaJuego() {
+            document.getElementById("questionNum").innerText = `Pregunta ${qIndex + 1} de ${preguntasFiltradas.length}`;
+            document.getElementById("roundCash").innerText = `Monedas ganadas: ${dineroRonda}`;
+            
+            let p = preguntasFiltradas[qIndex];
+            document.getElementById("questionText").innerText = p.q;
+            
+            let container = document.getElementById("optionsContainer");
+            container.innerHTML = "";
+            
+            p.a.forEach((opcion, i) => {
+                container.innerHTML += `<button class="opt-btn" onclick="validarRespuesta(${i}, this)">${opcion}</button>`;
+            });
+        }
+
+        function validarRespuesta(seleccion, boton) {
+            let p = preguntasFiltradas[qIndex];
+            let botones = document.querySelectorAll(".opt-btn");
+            botones.forEach(b => b.disabled = true);
+
+            if (seleccion === p.c) {
+                boton.classList.add("correct");
+                buenasRonda++;
+                dineroRonda += 5;
+            } else {
+                boton.classList.add("wrong");
+                botones[p.c].classList.add("correct");
+            }
+
+            setTimeout(() => {
+                qIndex++;
+                if(qIndex < preguntasFiltradas.length) {
+                    mostrarPreguntaJuego();
+                } else {
+                    mostrarResultadosFinales();
+                }
+            }, 1200);
+        }
+
+        function mostrarResultadosFinales() {
+            document.getElementById("quizScreen").classList.remove("active");
+            document.getElementById("resultScreen").classList.add("active");
+
+            let titulo = document.getElementById("resultTitle");
+            let detalles = document.getElementById("resultDetails");
+            let pagoTxt = document.getElementById("payoutText");
+
+            detalles.innerText = `Respuestas correctas: ${buenasRonda} de ${preguntasFiltradas.length}`;
+
+            // Regla especial de la ronda perfecta
+            if(buenasRonda === preguntasFiltradas.length && preguntasFiltradas.length > 0) {
+                titulo.innerText = "👑 ¡RONDA PERFECTA! 👑";
+                dineroRonda = 100;
+            } else {
+                titulo.innerText = "🏁 Desafío Terminado";
+            }
+
+            pagoTxt.innerText = `+$${dineroRonda} Monedas`;
+            
+            // Guardar monedas exclusivamente en la materia actual
+            let monedasActuales = parseInt(localStorage.getItem("coins_" + materiaActual) || "0");
+            localStorage.setItem("coins_" + materiaActual, monedasActuales + dineroRonda);
+            
+            renderizarAldeaMateria();
+        }
+
+        function irAlMenuInicial() {
+            document.getElementById("resultScreen").classList.remove("active");
+            document.getElementById("setupScreen").classList.add("active");
+            document.getElementById("temaInput").value = "";
+        }
+
+        function comprarEdificio(emoji, costo) {
+            let monedasActuales = parseInt(localStorage.getItem("coins_" + materiaActual) || "0");
+            let estructuraActual = JSON.parse(localStorage.getItem("village_" + materiaActual) || "[]");
+
+            if(monedasActuales < costo) {
+                alert("❌ No tienes suficientes monedas de esta materia. ¡Responde más trivias!");
+                return;
+            }
+
+            let espacioLibre = estructuraActual.findIndex(e => e === "" || e === undefined || e === null);
+            
+            if (espacioLibre === -1 && estructuraActual.length < 15) {
+                estructuraActual.push(emoji);
+                localStorage.setItem("coins_" + materiaActual, monedasActuales - costo);
+                localStorage.setItem("village_" + materiaActual, JSON.stringify(estructuraActual));
+                renderizarAldeaMateria();
+                return;
+            }
+
+            if (espacioLibre !== -1) {
+                estructuraActual[espacioLibre] = emoji;
+                localStorage.setItem("coins_" + materiaActual, monedasActuales - costo);
+                localStorage.setItem("village_" + materiaActual, JSON.stringify(estructuraActual));
+                renderizarAldeaMateria();
+            } else {
+                alert("🏰 ¡Esta aldea ya está repleta!");
+            }
+        }
+
+        function demolerAldea() {
+            if(confirm(`¿Quieres destruir por completo la aldea de ${materiaActual.toUpperCase()}?`)) {
+                localStorage.setItem("village_" + materiaActual, JSON.stringify([]));
+                renderizarAldeaMateria();
+            }
+        }
+    </script>
+</body>
+</html>

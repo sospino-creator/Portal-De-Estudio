@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.er Año Medio - Panel de Asignaturas</title>
+    <style>
+        :root {
+            --primary: #3498DB; /* Azul intermedio para Media */
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --mat: #E74C3C;
+            --len: #F39C12;
+            --cie: #2ECC71;
+            --his: #9B59B6;
+            --ing: #1ABC9C;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .bajada {
+            text-align: center;
+            color: #7F8C8D;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .grid-materias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .materia-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .materia-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Colores personalizados por borde */
+        .mat { border-bottom-color: var(--mat); }
+        .len { border-bottom-color: var(--len); }
+        .cie { border-bottom-color: var(--cie); }
+        .his { border-bottom-color: var(--his); }
+        .ing { border-bottom-color: var(--ing); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html">⬅️ Volver al Inicio</a>
+        <div style="font-weight: bold; color: var(--primary);">Enseñanza Media</div>
+    </header>
+
+    <div class="container">
+        <h1>1.° Año Medio</h1>
+        <p class="bajada">Selecciona una asignatura para comenzar a revisar los contenidos curriculares.</p>
+
+        <div class="grid-materias">
+            <a href="mat1.html" class="materia-card mat">📐 Matemática</a>
+            <a href="len1.html" class="materia-card len">📚 Lenguaje</a>
+            <a href="cie1_menu.html" class="materia-card cie">🔬 Ciencias Naturales</a>
+            <a href="his1.html" class="materia-card his">📜 Historia</a>
+            <a href="ing1.html" class="materia-card ing">💬 Inglés</a>
+        </div>
+    </div>
+
+</body>
+</html>

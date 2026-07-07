@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Pomodoro</title>
+    <style>
+        :root { --pomo: #E74C3C; --dark: #2C3E50; --light: #F8F9FA; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); text-align: center; }
+        header { background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header a { text-decoration: none; color: var(--dark); font-weight: bold; }
+        .container { max-width: 500px; margin: 60px auto; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 8px solid var(--pomo); }
+        .timer { font-size: 72px; font-weight: bold; color: var(--pomo); margin: 20px 0; font-variant-numeric: tabular-nums; }
+        .pomo-btn { background: var(--pomo); color: white; border: none; padding: 15px 35px; font-size: 18px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        .pomo-btn:hover { background: #C0392B; }
+    </style>
+</head>
+<body>
+    <header><a href="herramientas.html">⬅️ Volver a Herramientas</a><div>⏱️ Método Pomodoro</div></header>
+    <div class="container">
+        <h2>Temporizador de Estudio</h2>
+        <p>Mantén el foco: 25 minutos de estudio intenso y 5 minutos de descanso.</p>
+        <div class="timer" id="timerDisplay">25:00</div>
+        <button class="pomo-btn" id="pomoBtn" onclick="togglePomodoro()">Iniciar Bloque</button>
+    </div>
+    <script>
+        let timerInterval; let isRunning = false; let timeLeft = 25 * 60;
+        function togglePomodoro() {
+            let btn = document.getElementById("pomoBtn"); let display = document.getElementById("timerDisplay");
+            if (isRunning) {
+                clearInterval(timerInterval); isRunning = false; btn.innerHTML = "Iniciar Bloque";
+            } else {
+                isRunning = true; btn.innerHTML = "Pausar";
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    let mins = Math.floor(timeLeft / 60); let secs = timeLeft % 60;
+                    display.innerHTML = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval); alert("🎉 ¡Excelente bloque de estudio! Tómate un break de 5 minutos.");
+                        timeLeft = 25 * 60; display.innerHTML = "25:00"; btn.innerHTML = "Iniciar Bloque"; isRunning = false;
+                    }
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>

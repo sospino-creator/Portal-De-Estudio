@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Estudio - 7mo a 1ro Medio</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #2ECC71;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary), #357ABD);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h1 { margin-bottom: 10px; font-size: 36px; }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            cursor: pointer;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 { font-size: 22px; margin-bottom: 15px; }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🎓 EduPortal</div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="herramientas.html">Herramientas</a>
+            <a href="#">Contacto</a>
+            <a href="mi-avatar.html">🐶 Personalizar Mascota</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Tu espacio de estudio digital</h1>
+        <p>Encuentra guías, resúmenes, videos y ejercicios para romperla en tus materias.</p>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title">Selecciona tu Curso</h2>
+        <div class="cursos-grid">
+            
+            <div class="card">
+                <h3>7.° Básico</h3>
+                <p>Matemática, Lenguaje, Ciencias, Historia e Inglés.</p>
+                <a href="7septimo.html" class="btn">Entrar</a>
+            </div>
+
+            <div class="card" style="border-color: #9B59B6;">
+                <h3>8.° Básico</h3>
+                <p>Prepárate para el siguiente nivel con los mejores recursos.</p>
+                <a href="8octavo.html" class="btn" style="background-color: #9B59B6;">Entrar</a>
+            </div>
+
+            <div class="card" style="border-color: #E67E22;">
+                <h3>1.° Medio</h3>
+                <p>Comienza la educación media con todo el apoyo académico.</p>
+                <a href="1medio.html" class="btn" style="background-color: #E67E22;">Entrar</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
