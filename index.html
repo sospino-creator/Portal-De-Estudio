@@ -141,71 +141,108 @@
         </div>
     </div>
 
-<!-- ================= ZONA DE FEEDBACK Y VISITAS ================= -->
+<!-- ================= ZONA DE ENCUESTA Y VISITAS ================= -->
     <section style="max-width: 900px; margin: 40px auto; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; font-family: sans-serif;">
         
-        <h2 style="color: #003366; margin-bottom: 25px; font-size: 24px;">📊 Estadísticas y Feedback</h2>
+        <h2 style="color: #003366; margin-bottom: 25px; font-size: 24px;">📊 Estadísticas y Encuesta</h2>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
             
             <!-- 1. CONTADOR DE VISITAS -->
-            <div style="padding: 20px; border-right: 2px solid #f0f0f0;">
+            <div style="padding: 20px; border-right: 2px solid #f0f0f0; height: 100%;">
                 <p style="margin: 0 0 10px 0; font-weight: bold; color: #555;">NÚMERO DE VISITAS</p>
-                <!-- Este widget gratuito cuenta cada visita en tiempo real en tu GitHub -->
+                <!-- Widget contador en tiempo real -->
                 <img src="https://profile-counter.glitch.me/creadordesospino-portal/count.svg" alt="Contador de Visitas" style="height: 40px;">
-                <p style="font-size: 12px; color: #888; margin-top: 10px;">(Se actualiza automáticamente al recargar)</p>
+                <p style="font-size: 12px; color: #888; margin-top: 10px;">(Se actualiza al recargar la página)</p>
             </div>
 
-            <!-- 2. SISTEMA DE PUNTUACIÓN -->
-            <div style="padding: 20px;">
-                <p style="margin: 0 0 10px 0; font-weight: bold; color: #555;">PUNTÚA NUESTRO SITIO</p>
+            <!-- 2. ENCUESTA INTERACTIVA CON MEJORAS -->
+            <div style="padding: 10px; text-align: left;" id="zona-encuesta">
+                <p style="margin: 0 0 15px 0; font-weight: bold; color: #555; text-align: center;">📝 ENCUESTA DE SATISFACCIÓN</p>
                 
-                <!-- Estrellas interactivos -->
-                <div style="font-size: 35px; cursor: pointer; display: inline-flex; gap: 10px;">
-                    <span class="star" onclick="puntuar(1)" style="color: #ccc; transition: color 0.2s;">★</span>
-                    <span class="star" onclick="puntuar(2)" style="color: #ccc; transition: color 0.2s;">★</span>
-                    <span class="star" onclick="puntuar(3)" style="color: #ccc; transition: color 0.2s;">★</span>
-                    <span class="star" onclick="puntuar(4)" style="color: #ccc; transition: color 0.2s;">★</span>
-                    <span class="star" onclick="puntuar(5)" style="color: #ccc; transition: color 0.2s;">★</span>
-                </div>
-                
-                <p id="mensaje-puntuacion" style="font-size: 14px; color: #27AE60; font-weight: bold; margin-top: 10px; min-height: 20px;"></p>
+                <form id="formulario-encuesta" onsubmit="enviarEncuesta(event)">
+                    <!-- Pregunta 1 -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px;">1. ¿Qué te parece el diseño del portal?</label>
+                        <select id="p1" required style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; font-family: sans-serif;">
+                            <option value="">Selecciona una opción...</option>
+                            <option value="Excelente">¡Excelente! Muy ordenado</option>
+                            <option value="Bueno">Bueno, pero puede mejorar</option>
+                            <option value="Malo">No me gusta mucho</option>
+                        </select>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px;">2. ¿Te sirve para estudiar tus materias?</label>
+                        <select id="p2" required style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; font-family: sans-serif;">
+                            <option value="">Selecciona una opción...</option>
+                            <option value="Sí, un montón">Sí, me ayuda un montón</option>
+                            <option value="A veces">A veces lo uso</option>
+                            <option value="No">Prefiero estudiar de mis cuadernos</option>
+                        </select>
+                    </div>
+
+                    <!-- Pregunta 3 (Texto Abierto) -->
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px;">3. ¿Qué podríamos mejorar en el sitio?</label>
+                        <textarea id="p3" placeholder="Cuéntanos qué te gustaría que agregáramos..." required style="width: 100%; height: 60px; padding: 8px; border-radius: 8px; border: 1px solid #ccc; font-family: sans-serif; resize: none; box-sizing: border-box;"></textarea>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <button type="submit" style="width: 100%; background: #11caa0; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s; font-family: sans-serif;">
+                        Enviar Respuestas
+                    </button>
+                </form>
             </div>
 
         </div>
     </section>
 
-    <!-- SCRIPT DE LA PUNTUACIÓN -->
+    <!-- SCRIPT DE LA ENCUESTA -->
     <script>
-        // Al cargar la página, revisamos si el usuario ya había votado antes
-        window.onload = function() {
-            let votoGuardado = localStorage.getItem("votoSitio");
-            if (votoGuardado) {
-                pintarEstrellas(votoGuardado);
-                document.getElementById("mensaje-puntuacion").innerText = `¡Ya votaste con ${votoGuardado} estrellas! ⭐`;
+        // Al cargar la página, revisamos si ya respondió la encuesta antes
+        window.addEventListener('load', function() {
+            let yaRespondio = localStorage.getItem("encuestaRespondida");
+            if (yaRespondio) {
+                mostrarAgradecimiento();
             }
+        });
+
+        function enviarEncuesta(event) {
+            event.preventDefault(); // Evita que la página se recargue al enviar
+            
+            // Guardamos las respuestas del usuario localmente
+            let r1 = document.getElementById("p1").value;
+            let r2 = document.getElementById("p2").value;
+            let r3 = document.getElementById("p3").value;
+            
+            localStorage.setItem("encuestaRespondida", "true");
+            localStorage.setItem("respuesta_diseno", r1);
+            localStorage.setItem("respuesta_estudio", r2);
+            localStorage.setItem("respuesta_mejora", r3);
+
+            mostrarAgradecimiento();
         }
 
-        function puntuar(estrellas) {
-            // Guardamos el voto en la memoria del navegador del usuario
-            localStorage.setItem("votoSitio", estrellas);
-            
-            // Pintamos las estrellas en pantalla
-            pintarEstrellas(estrellas);
-            
-            // Mostramos un mensaje de agradecimiento
-            document.getElementById("mensaje-puntuacion").innerText = `¡Gracias por tu apoyo! Nos diste ${estrellas} estrellas ⭐`;
-        }
+        function mostrarAgradecimiento() {
+            let r1 = localStorage.getItem("respuesta_diseno") || "Enviada";
+            let r2 = localStorage.getItem("respuesta_estudio") || "Enviada";
+            let r3 = localStorage.getItem("respuesta_mejora") || "Ninguna sugerencia";
 
-        function pintarEstrellas(numero) {
-            let estrellasHTML = document.querySelectorAll('.star');
-            estrellasHTML.forEach((star, index) => {
-                if (index < numero) {
-                    star.style.color = "#F1C40F"; // Color dorado para las activas
-                } else {
-                    star.style.color = "#ccc"; // Gris para las apagadas
-                }
-            });
+            document.getElementById("zona-encuesta").innerHTML = `
+                <div style="text-align: center; padding: 10px;">
+                    <span style="font-size: 40px;">🎉</span>
+                    <h3 style="color: #27AE60; margin: 10px 0 5px 0;">¡Encuesta Completada!</h3>
+                    <p style="color: #666; font-size: 13px; margin-bottom: 15px;">Tus respuestas se guardaron con éxito en tu navegador.</p>
+                    <div style="background: #f9f9f9; padding: 12px; border-radius: 10px; text-align: left; font-size: 12px; line-height: 1.5;">
+                        <strong style="color: #003366;">Tus respuestas:</strong><br>
+                        • <strong>Diseño:</strong> ${r1}<br>
+                        • <strong>Utilidad:</strong> ${r2}<br>
+                        • <strong>Tu sugerencia:</strong> "${r3}"
+                    </div>
+                </div>
+            `;
         }
     </script> </body>
 </html>
